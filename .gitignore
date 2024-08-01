@@ -1,0 +1,7 @@
+node_modules/
+.env
+.eslintcache
+logs/
+.idea/
+build/
+.vscode/

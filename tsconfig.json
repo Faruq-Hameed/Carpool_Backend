@@ -1,0 +1,51 @@
+{
+  "ts-node": {
+    "transpileOnly": true,
+    "require": [
+      "typescript-transform-paths/register"
+    ],
+  },
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "lib": [
+      "es2016"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "outDir": "./build",
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+		"paths": {
+      "@/*": ["./src/*"],
+      "@/app": ["./src/app"],
+      "@/config": ["./src/config"],
+      "@/controllers": ["./src/controllers"],
+      "@/database": ["./src/database"],
+      "@/exceptions": ["./src/exceptions"],
+      "@/interfaces": ["./src/interfaces"],
+      "@/middlewares": ["./src/middlewares"],
+      "@/routes": ["./src/routes"],
+      "@/services": ["./src/services"],
+      "@/utils": ["./src/utils"],
+      "@/templates": ["./src/templates"]
+    },
+    "plugins": [
+      // Transform paths in output .js files
+      {
+        "transform": "typescript-transform-paths"
+      },
+      // Transform paths in output .d.ts files (Include this line if you output declarations files)
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ]
+  },
+}
