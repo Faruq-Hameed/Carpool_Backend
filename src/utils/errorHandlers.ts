@@ -13,7 +13,10 @@ const ErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   res.status(errStatus).json({
     message: errStatus === 500 ? 'Internal Server Error' : errMsg,
     data: {},
-    stack: process.env.environment === 'development' ? err.stack : {},
+    stack:
+      process.env.environment === 'development' && errStatus === 500
+        ? err.stack
+        : {},
   });
 };
 export default ErrorHandler;

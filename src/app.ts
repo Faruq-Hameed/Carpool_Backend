@@ -2,19 +2,23 @@ import express from 'express';
 import type { Application, Request, Response } from 'express';
 import logger from 'morgan';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
 
 import ErrorHandler from '@/utils/errorHandlers';
+import userRouter from './routes/userRoutes';
 
 dotenv.config();
 
 export const app: Application = express();
 
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // logger
 app.use(logger('dev'));
 
+app.use('/api/users', userRouter);
 app.get('/', (req: Request, res: Response) => {
   res.status(200).send('<h1>Welcome! to LYFT.ng</h1>');
 });
