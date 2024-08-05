@@ -20,6 +20,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@ngrok/ngrok": "^1.4.0",
     "@types/nodemailer": "^6.4.15",
     "cloudinary": "^2.0.3",
     "dotenv": "^16.4.5",
