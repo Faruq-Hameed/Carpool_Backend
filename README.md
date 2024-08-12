@@ -121,6 +121,7 @@ The project uses custom error handling middleware to handle and format errors.
 
 - **Helmet** is used to set various HTTP headers for security.
 - **JWT** is used for authentication and securing endpoints.
+- **CORS** is used for cross-origin authentication.
 
 ## License
 
