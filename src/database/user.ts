@@ -1,4 +1,4 @@
-import { type IUser, UserStatus } from '@/utils/types/user';
+import { Status, type IUser } from '@/utils/types/';
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema<IUser>({
@@ -31,8 +31,8 @@ const userSchema = new Schema<IUser>({
   },
   status: {
     type: String,
-    enum: Object.values(UserStatus), // Use enum values
-    default: UserStatus.NOT_VERIFIED, // Set default value if needed
+    enum: Object.values(Status), // Use enum values
+    default: Status.RESTRICTED, // Set default value to active
   },
 });
 

@@ -1,11 +1,6 @@
 import { type Document } from 'mongoose';
+import { type Status } from '.';
 
-export enum UserStatus {
-  ACTIVE = 'active',
-  NOT_VERIFIED = 'not_verified',
-  BLOCKED = 'blocked',
-  DELETED = 'deleted',
-}
 export interface IUser extends Document {
   email: string;
   phonenumber: string;
@@ -14,5 +9,5 @@ export interface IUser extends Document {
   balance: number;
   profilePicture?: string;
   idAdmin: boolean;
-  status: UserStatus;
+  status: Status;
 }

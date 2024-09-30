@@ -4,14 +4,6 @@ import { UserService } from '@/services/';
 import { userValidator } from '@/utils/validations/userValidations';
 import { BadRequestError } from '@/utils/errors';
 import { type IUser } from '@/utils/types/user';
-// import { User } from "@/database";
-
-// class UserController {
-//     public userService: UserService;
-
-//     constructor() {
-//         this.userService = new UserService();
-//     }
 
 const createUser = async (
   req: Request,
@@ -57,13 +49,11 @@ const createOtp = async (
     const channel = email ? { email } : { phonenumber };
     const otp = await UserService.createOtp({ ...channel });
 
-    res
-      .status(200)
-      .send({
-        message:
-          'Otp created successfully, please check your email or phonenumber',
-        otp,
-      });
+    res.status(200).send({
+      message:
+        'Otp created successfully, please check your email or phonenumber',
+      otp,
+    });
   } catch (err) {
     next(err);
   }
