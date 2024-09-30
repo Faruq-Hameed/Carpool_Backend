@@ -1,6 +1,22 @@
 import { type Document, type ObjectId } from 'mongoose';
 import { type Status } from '.';
 
+/** Car interface
+ * @ owner: Reference to the user who owns the car
+ * @ model: Car model (e.g., Toyota Corolla)
+ * @ licensePlate: License plate number
+ * @ seats: Number of seats in the car
+ */
+export interface ICar extends Document {
+  owner: ObjectId;
+  model: string;
+  licensePlate: string;
+  seats: number;
+  isVerified: boolean;
+  status: Status;
+  verificationData: string; //  for verification data;
+}
+
 /** Location interface
  * @ name: string
  * @ coordinates: [longitude: number, latitude: number]
@@ -30,20 +46,4 @@ export interface IRide extends Document {
   availableSeats: number;
   pricePerSeat: number;
   departureRange: number; // in munutes +/- waiting time e.g 10
-}
-
-/** Car interface
- * @ owner: Reference to the user who owns the car
- * @ model: Car model (e.g., Toyota Corolla)
- * @ licensePlate: License plate number
- * @ seats: Number of seats in the car
- */
-export interface ICar extends Document {
-  owner: ObjectId;
-  model: string;
-  licensePlate: string;
-  seats: number;
-  isVerified: boolean;
-  status: Status;
-  verificationData: string; //  for verification data;
 }
