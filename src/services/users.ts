@@ -24,7 +24,9 @@ class UserService {
       { $or: [{ email: data.email }, { phonenumber: data.phonenumber }] },
       '_id',
     );
+    // existingUser =   {}
     if (existingUser) {
+      // if
       throw new ConflictError('user already exists');
     }
     return await User.create(data);
