@@ -52,6 +52,7 @@ This is a personal project aimed at creating a carpooling service. The project i
 - **Joi**: Schema description language and validator for JavaScript objects.
 - **Helmet**: Helps secure Express apps by setting various HTTP headers.
 - **Multer**: Node.js middleware for handling multipart/form-data, used for file uploads.
+- **AWS S3 PACKAGES**: S3 Bucket for storing files
 - **Cloudinary**: Cloud service that offers a solution for image and video management.
 - **Ngrok**: Secure introspectable tunnels to localhost, useful for testing webhooks.
 - **Jest**: JavaScript testing framework.
