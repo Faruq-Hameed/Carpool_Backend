@@ -1,4 +1,7 @@
 import crypto from 'crypto';
+import AWS from 'aws-sdk';
+// import multer from 'multer';
+// import multerS3 from 'multer-s3';
 
 // Encryption key and algorithm setup
 const algorithm = 'aes-256-cbc'; // the encryption algorithm we are using used for both encrypt and decrypt.
@@ -34,3 +37,11 @@ export async function decryptVerificationData(
   decrypted += decipher.final('utf8');
   return JSON.parse(decrypted);
 }
+
+export const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
+// const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;

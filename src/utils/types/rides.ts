@@ -1,16 +1,23 @@
-import { type Document, type ObjectId } from 'mongoose';
-import { type Status } from '.';
+import { type ObjectId } from 'mongoose';
+import { type Status } from './general';
 
 /** Car interface
  * @ owner: Reference to the user who owns the car
+ * @ maker: Car maker (e.g., Toyota)
  * @ model: Car model (e.g., Toyota Corolla)
+ * @ year: Car year (e.g., 2006)
+ * @ color: Car model (e.g., blue)
  * @ licensePlate: License plate number
  * @ seats: Number of seats in the car
  */
-export interface ICar extends Document {
+export interface ICar {
   owner: ObjectId;
+  brand: string;
   model: string;
+  year: string;
+  color: string;
   licensePlate: string;
+  pictures: string[]; // Array of URLs/paths to car pictures
   seats: number;
   isVerified: boolean;
   status: Status;
@@ -36,11 +43,11 @@ export interface ILocation {
  * @ availableSeats: Number of seats available for passengers
  * @ pricePerSeat: Cost per seat for the ride
  */
-export interface IRide extends Document {
+export interface IRide {
   driverId: ObjectId;
-  startingPoint: Location;
-  destination: Location;
-  routes: Location[]; // Array of locations forming the planned route
+  startingPoint: ILocation;
+  destination: ILocation;
+  routes: ILocation[]; // Array of locations forming the planned route
   carId: ObjectId; // Reference to Car model
   departureTime: Date;
   availableSeats: number;

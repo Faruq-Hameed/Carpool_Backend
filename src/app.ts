@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 
 import ErrorHandler from '@/utils/errorHandlers';
-import userRouter from './routes/userRoutes';
+import userRouter from '@/routes/userRoutes';
+import carRouter from '@/routes/carRoutes';
 
 dotenv.config();
 
@@ -18,9 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 // logger
 app.use(logger('dev'));
 
-app.use('/api/users', userRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/cars', carRouter);
+
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).send('<h1>Welcome! to LYFT.ng</h1>');
+  res.status(200).send({ message: 'Welcome to Lyft API' });
 });
 
 // error handler

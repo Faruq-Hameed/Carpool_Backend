@@ -26,7 +26,7 @@ class CarService {
    * @returns An array of car documents.
    */
   public async getAllCars(): Promise<ICar[]> {
-    return await Car.find()
+    return await Car.find({})
       .populate('owner', 'firstname lastname email phone isVerified status')
       .exec();
   }
@@ -36,10 +36,10 @@ class CarService {
    * @param carId - The ID of the car.
    * @returns The car document if found, or null.
    */
-  public async getCarById(carId: string): Promise<ICar | null> {
+  public async getCarById(carId: string): Promise<ICar> {
     const car = await Car.findById(carId).populate(
       'owner',
-      'firstname lastname email phone isVerified status',
+      'firstname lastname email phone isVerified status pictures',
     );
     if (!car) {
       throw new NotFoundError('car not found');
@@ -64,6 +64,14 @@ class CarService {
     if (!car) {
       throw new NotFoundError('car not found');
     }
+    // check if total pictures is already 4
+    if (
+      car.pictures.length >= 4 &&
+      updateData.pictures &&
+      updateData.pictures?.length > 0
+    ) {
+      throw new BadRequestError('You can only add 4 pictures');
+    }
     return await Car.findByIdAndUpdate(carId, updateData, { new: true }).exec();
   }
 
@@ -82,6 +90,22 @@ class CarService {
     }).exec();
   }
 
+  /**
+   * Upload car pictures to S3 and update the car document.
+   * @param carId - The ID of the car.
+   * @param pictureUrls - Array of picture URLs uploaded to S3.
+   * @returns The updated car document.
+   */
+  // public async uploadCarPictures(carId: string, pictureUrls: string[]): Promise<ICar | null> {
+  //   const car = await this.getCarById(carId);
+  //   car?.pictures.push(...pictureUrls);
+  //   car?.save()
+  //   return await Car.findByIdAndUpdate(
+  //     carId,
+  //     { pictures: pictureUrls },
+  //     { new: true }
+  //   ).exec();
+  // }
   /**
    * Update the car verification data (Encrypted verification).
    * @param carId - The ID of the car.

@@ -6,29 +6,52 @@ const CarSchema = new Schema<ICar>(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
       required: true,
     }, // Reference to the user
+    brand: {
+      type: String,
+      required: true,
+    },
     model: {
       type: String,
       required: true,
-    }, // Car model (e.g., Toyota Corolla)
+    },
+    year: {
+      type: String,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
     licensePlate: {
       type: String,
       required: true,
-    }, // License plate number
+    },
+    seats: {
+      type: Number,
+      required: true,
+    },
+    pictures: {
+      type: [String],
+      validate: {
+        validator: function (pictures: string[]) {
+          return pictures.length <= 4; // Ensure not more than 4 pictures
+        },
+        message: 'Only 4 pictures are required.',
+      },
+      // required: true,
+    },
     isVerified: {
       type: Boolean,
       required: true,
       default: false,
     },
     verificationData: {
+      type: String,
       // contains information about the car validation
     },
-    seats: {
-      type: Number,
-      required: true,
-    }, // Number of seats in the car
     status: {
       type: String,
       enum: Object.values(Status), // Use enum values
