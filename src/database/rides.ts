@@ -54,11 +54,6 @@ const RideSchema = new Schema<IRide>(
       type: Number,
       required: true,
     },
-    departureRange: {
-      // ± Minutes window
-      type: Number,
-      default: 0,
-    },
   },
   { timestamps: true },
 );
