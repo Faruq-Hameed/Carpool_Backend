@@ -2,7 +2,6 @@
 // import multer from 'multer';
 // import multerS3 from 'multer-s3';
 import dotenv from 'dotenv';
-import { BadRequestError } from './errors'; // Load environment variables from .env file
 
 // Initialize the AWS S3 client
 // const s3 = new AWS.S3({
@@ -59,8 +58,8 @@ export const upload = multer({
   fileFilter: function (req, file, cb) {
     // Accept images only
     if (!file.mimetype.match(/^image\/(jpeg|png|gif)$/)) {
-      throw new BadRequestError('Only image files are allowed!');
-      // return cb(null, false); //CHECK IF THIS WORK
+      // Use the callback to send an error, instead of throwing it
+      cb(null, false); return;
     }
     cb(null, true);
   },

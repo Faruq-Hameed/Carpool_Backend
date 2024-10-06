@@ -35,14 +35,18 @@ export function uploadErrorHandler(
   if (err instanceof multer.MulterError) {
     // Handle Multer-specific errors
     if (err.code === 'LIMIT_FILE_SIZE') {
-      next(new BadRequestError('File size should not exceed 5MB')); return;
+      next(new BadRequestError('File size should not exceed 5MB'));
+      return;
     } else if (err.code === 'LIMIT_FILE_COUNT') {
-      next(new BadRequestError('You can upload up to 4 files only')); return;
+      next(new BadRequestError('You can upload up to 4 files only'));
+      return;
     }
-    next(new BadRequestError(`Upload error: ${err.message}`)); return;
+    next(new BadRequestError(`Upload error: ${err.message}`));
+    return;
   } else if (err) {
     // Handle other errors
-    next(new BadRequestError('An error occurred during file upload')); return;
+    next(err);
+    return;
   }
   next();
 }

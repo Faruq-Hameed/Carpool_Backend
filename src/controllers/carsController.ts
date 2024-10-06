@@ -4,7 +4,6 @@ import { type ICar } from '@/utils/types';
 import { createCarValidator } from '@/utils/joiSchema/carSchema';
 import { BadRequestError } from '@/utils/errors';
 import { type MulterS3File } from '@/utils/types/general';
-import { upload } from '@/utils/awsConfig';
 
 class CarController {
   /**
@@ -20,8 +19,10 @@ class CarController {
       if (error) {
         throw new BadRequestError(error.details[0].message);
       }
-      const newCar = await CarService.createCar(value as Partial<ICar>);
-      res.status(201).json(newCar);
+      res.status(200).send({
+        message: 'new car added successfully',
+        car: await CarService.createCar(value as Partial<ICar>),
+      });
     } catch (error) {
       next(error);
     }
@@ -37,7 +38,7 @@ class CarController {
   ): Promise<void> => {
     try {
       const cars = await CarService.getAllCars();
-      res.status(200).json(cars);
+      res.status(200).send({ message: 'cars available', cars });
     } catch (error) {
       next(error);
     }
@@ -52,11 +53,10 @@ class CarController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const carId = req.params.id;
-      const car = await CarService.getCarById(carId);
-      if (car) {
-        res.status(200).json(car);
-      }
+      res.status(200).send({
+        message: 'car available',
+        car: await CarService.getCarById(req.params.id),
+      });
     } catch (error) {
       next(error);
     }
@@ -88,50 +88,50 @@ class CarController {
         carId,
         updateData as Partial<ICar>,
       );
-      if (updatedCar) {
-        res.status(200).json(updatedCar);
-      }
+      res
+        .status(200)
+        .send({ message: 'car updated successfully', car: updatedCar });
     } catch (error) {
       next(error);
     }
   };
 
-  // Method to upload pictures for a specific car
-  public uploadCarPictures = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
-    const carId = req.params.carId;
+  // // Method to upload pictures for a specific car
+  // public uploadCarPictures = async (
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction,
+  // ): Promise<void> => {
+  //   const carId = req.params.carId;
 
-    try {
-      // Find the car by ID
-      const car = await CarService.getCarById(carId);
+  //   try {
+  //     // Find the car by ID
+  //     const car = await CarService.getCarById(carId);
 
-      // Upload pictures using multer-S3
-      upload.array('car_pictures', 4)(req, res, async (err: any) => {
-        if (err) {
-          return res.status(500).json({ error: 'Failed to upload pictures' });
-        }
+  //     // Upload pictures using multer-S3
+  //     upload.array('car_pictures', 4)(req, res, async (err: any) => {
+  //       if (err) {
+  //         return res.status(500).json({ error: 'Failed to upload pictures' });
+  //       }
 
-        // Collect uploaded picture URLs
-        const pictures = req.files as MulterS3File[];
-        const uploadedUrls = pictures.map(picture => picture.location);
+  //       // Collect uploaded picture URLs
+  //       const pictures = req.files as MulterS3File[];
+  //       const uploadedUrls = pictures.map(picture => picture.location);
 
-        // Update the car with the uploaded picture URLs
-        car.pictures = uploadedUrls;
+  //       // Update the car with the uploaded picture URLs
+  //       car.pictures = uploadedUrls;
 
-        res
-          .status(200)
-          .json({
-            message: 'Pictures uploaded successfully',
-            pictures: uploadedUrls,
-          });
-      });
-    } catch (error) {
-      res.status(500).json({ error: 'Failed to upload car pictures' });
-    }
-  };
+  //       res
+  //         .status(200)
+  //         .json({
+  //           message: 'Pictures uploaded successfully',
+  //           pictures: uploadedUrls,
+  //         });
+  //     });
+  //   } catch (error) {
+  //     res.status(500).json({ error: 'Failed to upload car pictures' });
+  //   }
+  // };
 
   /**
    * Controller method to delete a car by its ID.
@@ -143,10 +143,8 @@ class CarController {
   ): Promise<void> => {
     try {
       const carId = req.params.id;
-      const deletedCar = await CarService.deleteCar(carId);
-      if (deletedCar) {
-        res.status(200).json(deletedCar);
-      }
+      await CarService.deleteCar(carId);
+      res.status(200).json({ message: 'car deleted successfully', car: null });
     } catch (error) {
       next(error);
     }
