@@ -22,6 +22,23 @@ const createUser = async (
   }
 };
 
+const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    // const { value, error } = userValidator(req.body as Partial<IUser>, true);
+    // if (error) {
+    //   throw new BadRequestError(error.details[0].message);
+    // }
+    // const user = await UserService.createUser(value as IUser);
+    // res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getUser = async (
   req: Request,
   res: Response,
@@ -29,6 +46,19 @@ const getUser = async (
 ): Promise<void> => {
   try {
     const user = await UserService.getUser({ ...req.query });
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getUserById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const user = await UserService.getUser({ _id: req.params.id });
     res.status(200).json(user);
   } catch (err) {
     next(err);
@@ -86,4 +116,4 @@ const verifyOtp = async (
 };
 // }
 
-export { createUser, getUser, createOtp, verifyOtp };
+export { createUser, getUser, createOtp, verifyOtp, getUserById, updateUser };

@@ -6,30 +6,77 @@ import sendEmail from '@/utils/mail';
 import crypto from 'crypto';
 
 class UserService {
-  /** Get a user by any param */
-  async getUser(
-    query: Record<string, any>,
-    select?: string,
-  ): Promise<any[] | boolean> {
-    const result = await User.find(query, select);
-    if (result.length === 0) {
-      return false;
-    }
-    return result;
-  }
-
   /** Create a user service */
   async createUser(data: IUser): Promise<IUser> {
     const existingUser = await this.getUser(
-      { $or: [{ email: data.email }, { phonenumber: data.phonenumber }] },
+      {
+        $or: [
+          { email: data.email },
+          { phonenumber: data.phonenumber },
+          { username: data.username },
+        ],
+      },
       '_id',
     );
-    // existingUser =   {}
     if (existingUser) {
-      // if
       throw new ConflictError('user already exists');
     }
     return await User.create(data);
+  }
+
+  // NOT EXPOSED YET BECAUSE OF KYC
+  private async updateUserData(
+    data: Partial<IUser>,
+    userId: string,
+  ): Promise<any> {
+    // if username is passed in, check if it doesn't belong to another user
+    if (data.username) {
+      const existingUser = await this.findAUser(
+        { username: data.username },
+        '_id',
+      );
+      if (existingUser && existingUser.id !== userId) {
+        throw new ConflictError('username already exists for another user');
+      }
+    }
+
+    // if email is passed in, check if it doesn't belong to another user
+    if (data.email) {
+      const existingUser = await this.findAUser({ email: data.email }, '_id');
+      if (existingUser && existingUser.id !== userId) {
+        throw new ConflictError('email already exists for another user');
+      }
+    }
+
+    // if phonenumber is passed in, check if it doesn't belong to another user
+    if (data.phonenumber) {
+      const existingUser = await this.findAUser(
+        { phonenumber: data.phonenumber },
+        '_id',
+      );
+      if (existingUser && existingUser.id !== userId) {
+        throw new ConflictError('phonenumber already exists for another user');
+      }
+    }
+
+    return {
+      message: 'Updated successful',
+      data: await User.findByIdAndUpdate(userId, data, { new: true }),
+    };
+  }
+
+  /** Get user(s) by any param */
+  async getUser(query: Record<string, any>, select?: string): Promise<IUser[]> {
+    const result = await User.find(query, select);
+    return result;
+  }
+
+  /** Find a user by any param */
+  async findAUser(
+    query: Record<string, any>,
+    select?: string,
+  ): Promise<IUser | null> {
+    return await User.findOne(query, select);
   }
 
   /** Create otp document */

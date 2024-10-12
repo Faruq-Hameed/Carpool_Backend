@@ -5,10 +5,12 @@ const userSchema = new Schema<IUser>({
   phonenumber: {
     type: String,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   firstname: {
     type: String,
@@ -17,6 +19,11 @@ const userSchema = new Schema<IUser>({
   lastname: {
     type: String,
     required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
   },
   profilePicture: {
     type: String,
