@@ -2,16 +2,16 @@
 
 ## Project Overview
 
-This is a personal project aimed at creating a carpooling service. The project involves both frontend and backend development, with a focus on providing a seamless and secure experience for users. The backend is built using TypeScript, Express, and MongoDB, with several other libraries and tools for handling various aspects of the application.
+This is a personal project aimed at creating a carpooling service to tackles the problem of transportation cost for mobile and non mobile individuals, groups and organizations. The project involves both frontend and backend development, with a focus on providing a seamless and secure experience for users. The backend is built using TypeScript, Express, and MongoDB, with several other libraries and tools for handling various aspects of the application.
 
 ## Table of Contents
 
 1. [Project Structure](#project-structure)
 2. [Technologies Used](#technologies-used)
-3. [Installation](#installation)
-4. [Scripts](#scripts)
-5. [Environment Variables](#environment-variables)
-6. [API Documentation](#api-documentation)
+3. [API Documentation](#api-documentation)
+4. [Installation](#installation)
+5. [Scripts](#scripts)
+6. [Environment Variables](#environment-variables)
 7. [License](#license)
 
 ## Project Structure
@@ -59,6 +59,38 @@ This is a personal project aimed at creating a carpooling service. The project i
 - **Prettier**: Code formatter.
 - **ESLint**: Pluggable linting utility for JavaScript and TypeScript.
 
+## API Documentation
+
+### AVAILABLE Endpoints (_ Will be updated as I progress_)
+
+- **POST /api/users/**: Registers a new user.
+- **POST /api/users/login**: Logs in a user and returns a JWT.
+- **PUT /api/users/:id**: Update User details.
+- **PUT /api/users/**: GET all users (optional query params allowed).
+- **PUT /api/users/:id**: GET user by id.
+- **DELETE /api/users/:id**: Delete a user account.
+
+- **POST /api/cars/**: Add a new car.
+- **POST /api/cars/**: GET all cars.
+- **GET /api/cars/:id**: GET car by id.
+- **DELETE /api/cars/:id**: DELETE a car
+- **PUT /api/cars/:id**: UPDATE a car e.g upload a car pictures
+
+### Error Handling
+
+The project uses custom error handling middleware to handle and format errors.
+
+- **BADREQUEST EXCEPTION**[400]: Bad request or malformed request body
+- **NOTFOUND EXCEPTION**[404]: Handles Not found exception
+- **CONFLICT EXCEPTION**[409]: Handles conflict exception
+- **INTERNAL ERROR**[500]: Handles internal server error exception
+
+### Security
+
+- **Helmet** is used to set various HTTP headers for security.
+- **JWT** is used for authentication and securing endpoints.
+- **CORS** is used for cross-origin authentication.
+
 ## Installation
 
 To set up the project locally, follow these steps:
@@ -104,25 +136,6 @@ JWT_SECRET=<your-jwt-secret>
 CLOUDINARY_URL=<your-cloudinary-url>
 NGROK_AUTHTOKEN=<your-ngrok-authtoken>
 ```
-
-## API Documentation
-
-### Endpoints
-
-- **POST /api/users/register**: Registers a new user.
-- **POST /api/users/login**: Logs in a user and returns a JWT.
-- **POST /api/rides/create**: Creates a new carpooling ride.
-- **GET /api/rides**: Retrieves available rides.
-
-### Error Handling
-
-The project uses custom error handling middleware to handle and format errors.
-
-### Security
-
-- **Helmet** is used to set various HTTP headers for security.
-- **JWT** is used for authentication and securing endpoints.
-- **CORS** is used for cross-origin authentication.
 
 ## License
 

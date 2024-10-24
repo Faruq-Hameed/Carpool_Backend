@@ -9,15 +9,17 @@ export const userValidator = (
   const userValidationSchema: Schema = Joi.object({
     firstname: Joi.string(),
     lastname: Joi.string(),
+    username: Joi.string(),
     email: Joi.string().email(),
     profilePicture: Joi.string(),
+    occupation: Joi.string(),
     phonenumber: Joi.string()
       .pattern(/^\d{11}$/)
       .messages({
         'string.pattern.base': `Phone number must be 11 digits.`,
       }),
   })
-    .min(!update ? 4 : 1) // all fields are required when creating new user
+    .min(!update ? 7 : 1) // all fields are required when creating new user
     .messages({
       'object.min':
         'At least one field must be provided for update and all for create.',

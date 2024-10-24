@@ -18,13 +18,35 @@ export const createCarValidator = (
     // status: Joi.string().valid(...Object.values(Status)).required(),  // Valid status options from Status enum
     // verificationData: Joi.string().optional(),       // Can be an encrypted string or optional at creation
   });
-  // return userSchema.validate(data);
+  // return CarSchema.validate(data);
   return CarSchema.validate(data, {
     abortEarly: false, // Include all errors
     errors: { wrap: { label: '' } },
   });
 };
 
+/**
+ * validating ride search request
+ * @param startLat: starting latitude as number
+ * @param startLng: starting longitude as number
+ * @param destLat: destination latitude as number
+ * @param destLng: destination longitude as number
+ *
+ * */
+export const validateRideSearch = (data: any): Joi.ValidationResult => {
+  const searchRideSchema = Joi.object({
+    startLng: Joi.number().min(1).required(), // starting longitude
+    startLat: Joi.number().min(1).required(), // starting latitude
+    destLng: Joi.number().min(1).required(), // destination longitude
+    destLat: Joi.number().min(1).required(), // destination latitude
+    radius: Joi.number().min(1).required(), // radius(variation) of the distance
+  });
+  // return rideSchema.validate(data);
+  return searchRideSchema.validate(data, {
+    abortEarly: false, // Include all errors
+    errors: { wrap: { label: '' } },
+  });
+};
 // export const userValidator = (
 //     data: unknown,
 //     update?: boolean,

@@ -1,8 +1,8 @@
 export enum Status {
-  ACTIVE = 'active',
-  RESTRICTED = 'restricted',
-  BLOCKED = 'blocked',
-  DELETED = 'deleted',
+  ACTIVE = 'ACTIVE',
+  RESTRICTED = 'RESTRICTED',
+  BLOCKED = 'BLOCKED',
+  DELETED = 'DELETED',
 }
 
 export interface MulterS3File extends Express.Multer.File {

@@ -52,5 +52,6 @@ export interface IRide {
   departureTime: Date;
   availableSeats: number;
   pricePerSeat: number;
-  departureRange: number; // in munutes +/- waiting time e.g 10
+  totalSeats: number;
+  reservedDriverSeats: number;
 }
