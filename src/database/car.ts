@@ -6,22 +6,26 @@ const CarSchema = new Schema<ICar>(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'users',
+      ref: 'User',
       required: true,
     }, // Reference to the user
     brand: {
+      // e.g Lexus
       type: String,
       required: true,
     },
     model: {
+      // e.g ES 350
       type: String,
       required: true,
     },
     year: {
+      // e.g 2011
       type: String,
       required: true,
     },
     color: {
+      // e.g blue
       type: String,
       required: true,
     },
@@ -30,8 +34,10 @@ const CarSchema = new Schema<ICar>(
       required: true,
     },
     seats: {
+      // total car seats: 5
       type: Number,
       required: true,
+      default: 5,
     },
     pictures: {
       type: [String],
@@ -43,14 +49,14 @@ const CarSchema = new Schema<ICar>(
       },
       // required: true,
     },
+    verificationData: {
+      type: String,
+      // contains information about the car validation
+    },
     isVerified: {
       type: Boolean,
       required: true,
       default: false,
-    },
-    verificationData: {
-      type: String,
-      // contains information about the car validation
     },
     status: {
       type: String,

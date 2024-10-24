@@ -52,4 +52,6 @@ export interface IRide {
   departureTime: Date;
   availableSeats: number;
   pricePerSeat: number;
+  totalSeats: number;
+  reservedDriverSeats: number;
 }

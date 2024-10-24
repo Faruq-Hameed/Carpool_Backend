@@ -45,8 +45,18 @@ const RideSchema = new Schema<IRide>(
       type: Date,
       required: true,
     },
-
+    totalSeats: {
+      // to be populated from the server(from car table)
+      type: Number,
+      required: true,
+    },
+    reservedDriverSeats: {
+      // seats reserved for driver and maybe friend
+      type: Number,
+      required: true,
+    },
     availableSeats: {
+      // seats available for passengers to join
       type: Number,
       required: true,
     },
