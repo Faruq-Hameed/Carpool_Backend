@@ -15,6 +15,6 @@ userRouter.post('/otp/verify', verifyOtp);
 userRouter.get('/', getUser);
 userRouter.put('/:id', getUserById);
 userRouter.delete('/:id', getUserById);
-// userRouter.get('/:id', getUserById);
+userRouter.get('/:id', getUserById);
 
 export default userRouter;

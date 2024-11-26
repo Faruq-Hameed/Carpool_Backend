@@ -25,8 +25,8 @@ class CarService {
    * Get all cars from the database.
    * @returns An array of car documents.
    */
-  public async getAllCars(): Promise<ICar[]> {
-    return await Car.find({})
+  public async getAllCars(query: Record<string, any>): Promise<ICar[]> {
+    return await Car.find(query)
       .populate('owner', 'firstname lastname email phone isVerified status')
       .exec();
   }

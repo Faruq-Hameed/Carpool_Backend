@@ -7,23 +7,21 @@ export const userValidator = (
   update: boolean = false, // specifies whether data is an update or a new data
 ): ValidationResult => {
   const userValidationSchema: Schema = Joi.object({
-    firstname: Joi.string(),
-    lastname: Joi.string(),
-    username: Joi.string(),
-    email: Joi.string().email(),
-    profilePicture: Joi.string(),
-    occupation: Joi.string(),
-    phonenumber: Joi.string()
-      .pattern(/^\d{11}$/)
-      .messages({
-        'string.pattern.base': `Phone number must be 11 digits.`,
-      }),
-  })
-    .min(!update ? 7 : 1) // all fields are required when creating new user
+    firstname: update ? Joi.string().required() : Joi.string(),
+    lastname: update ? Joi.string().required() : Joi.string(),
+    password: Joi.string()
+    .pattern(/^\d{6}$/)
+    .required()
     .messages({
-      'object.min':
-        'At least one field must be provided for update and all for create.',
-    });
+      'string.pattern.base': 'Password must be exactly 6 digits',
+      'any.required': 'Password is required'
+    }),
+    username: update ? Joi.string().required() : Joi.string(),
+    email: update ? Joi.string().email().required() : Joi.string(),
+    profilePicture: update ? Joi.string().required() : Joi.string(),
+    occupation: update ? Joi.string().required() : Joi.string(),
+    phonenumber: update ? Joi.string().required() : Joi.string()
+  })
   return userValidationSchema.validate(user, {
     abortEarly: false, // Include all errors
     errors: { wrap: { label: '' } },

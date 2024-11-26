@@ -19,12 +19,12 @@ const RideSchema = new Schema<IRide>(
   {
     driverId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
       required: true,
     }, // Reference to the driver (user)
     carId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Car',
+      ref: 'cars',
       required: true,
     },
     startingPoint: {

@@ -13,10 +13,6 @@ export const createCarValidator = (
     color: Joi.string().min(3).required(), // Car color (e.g., "red")
     licensePlate: Joi.string().min(2).max(20).required(), // License plate number
     seats: Joi.number().integer().min(1).required(), // Number of seats in the car
-    // pictures: Joi.array().items(Joi.string().uri()).min(2), // Array of minimum of 2pictures (URLs)        seats: Joi.number().integer().min(1).required(), // Number of seats in the car
-    // isVerified: Joi.boolean().default(false),        // Default false for new cars
-    // status: Joi.string().valid(...Object.values(Status)).required(),  // Valid status options from Status enum
-    // verificationData: Joi.string().optional(),       // Can be an encrypted string or optional at creation
   });
   // return CarSchema.validate(data);
   return CarSchema.validate(data, {

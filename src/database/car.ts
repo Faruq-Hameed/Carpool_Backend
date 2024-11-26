@@ -6,7 +6,7 @@ const CarSchema = new Schema<ICar>(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
       required: true,
     }, // Reference to the user
     brand: {
@@ -52,6 +52,7 @@ const CarSchema = new Schema<ICar>(
     verificationData: {
       type: String,
       // contains information about the car validation
+      default: ''
     },
     isVerified: {
       type: Boolean,
@@ -61,6 +62,7 @@ const CarSchema = new Schema<ICar>(
     status: {
       type: String,
       enum: Object.values(Status), // Use enum values
+      uppercase: true,
       default: Status.RESTRICTED, // Set default value to active
     },
   },
@@ -69,4 +71,4 @@ const CarSchema = new Schema<ICar>(
   },
 );
 
-export default mongoose.model<ICar>('Car', CarSchema);
+export default mongoose.model<ICar>('cars', CarSchema);

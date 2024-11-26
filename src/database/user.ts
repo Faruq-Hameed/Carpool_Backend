@@ -1,5 +1,6 @@
 import { Status, type IUser } from '@/utils/types/';
-import { Schema, model } from 'mongoose';
+import { CallbackError, Schema, model } from 'mongoose';
+// import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<IUser>(
   {
@@ -50,6 +51,7 @@ const userSchema = new Schema<IUser>(
     status: {
       type: String,
       enum: Object.values(Status), // Use enum values
+      uppercase: true,
       default: Status.RESTRICTED, // Set default value to active
     },
     isVerified: {
@@ -70,4 +72,31 @@ const userSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-export default model<IUser>('User', userSchema);
+// // Middleware to hash password before saving
+// userSchema.pre<IUser>(
+//   'save',
+//   async function (next: (err?: CallbackError) => void) {
+//     if (!this.isModified('password')) {
+//       next();
+//       return;
+//     }
+
+//     try {
+//       const salt = await bcrypt.genSalt(10);
+//       const hash = await bcrypt.hash(this.password, salt);
+//       this.password = hash;
+//       next();
+//     } catch (error) {
+//       next(error as CallbackError);
+//     }
+//   },
+// );
+
+// // Method to compare passwords
+// userSchema.methods.comparePassword = async function (
+//   userPassword: string,
+// ): Promise<boolean> {
+//   return await bcrypt.compare(userPassword, this.password as string);
+// };
+
+export default model<IUser>('users', userSchema);

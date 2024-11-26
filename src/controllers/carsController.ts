@@ -37,7 +37,7 @@ class CarController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const cars = await CarService.getAllCars();
+      const cars = await CarService.getAllCars(req.query);
       res.status(200).send({ message: 'cars available', cars });
     } catch (error) {
       next(error);
