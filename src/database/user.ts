@@ -72,31 +72,31 @@ const userSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-// // Middleware to hash password before saving
-// userSchema.pre<IUser>(
-//   'save',
-//   async function (next: (err?: CallbackError) => void) {
-//     if (!this.isModified('password')) {
-//       next();
-//       return;
-//     }
+// Middleware to hash password before saving
+userSchema.pre<IUser>(
+  'save',
+  async function (next: (err?: CallbackError) => void) {
+    if (!this.isModified('password')) {
+      next();
+      return;
+    }
 
-//     try {
-//       const salt = await bcrypt.genSalt(10);
-//       const hash = await bcrypt.hash(this.password, salt);
-//       this.password = hash;
-//       next();
-//     } catch (error) {
-//       next(error as CallbackError);
-//     }
-//   },
-// );
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(this.password, salt);
+      this.password = hash;
+      next();
+    } catch (error) {
+      next(error as CallbackError);
+    }
+  },
+);
 
-// // Method to compare passwords
-// userSchema.methods.comparePassword = async function (
-//   userPassword: string,
-// ): Promise<boolean> {
-//   return await bcrypt.compare(userPassword, this.password as string);
-// };
+// Method to compare passwords
+userSchema.methods.comparePassword = async function (
+  userPassword: string,
+): Promise<boolean> {
+  return await bcrypt.compare(userPassword, this.password as string);
+};
 
 export default model<IUser>('users', userSchema);
